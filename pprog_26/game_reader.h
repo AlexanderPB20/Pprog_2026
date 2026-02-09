@@ -17,7 +17,7 @@
 
 /**
  * @brief Carga los espacios de un juego desde un fichero
- * @author Samuel Manzorro y Alexander
+ * @author Alexander Preciado
  *
  * Abre el fichero indicado y lee los datos de los espacios para crearlos
  * y añadirlos a la estructura del juego[cite: 21, 92].
@@ -30,7 +30,7 @@ Status game_load_spaces(Game *game, char *filename);
 
 /**
  * @brief Añade un espacio a la estructura del juego
- * @author Samuel Manzorro y Alexander
+ * @author Alexander Preciado
  *
  * Comprueba que el espacio no sea nulo y que no se haya superado el límite
  * máximo antes de añadirlo al array de espacios del juego.
@@ -43,7 +43,7 @@ Status game_add_space(Game *game, Space *space);
 
 /**
  * @brief Obtiene el ID del espacio en una posición determinada
- * @author Samuel Manzorro y Alexander
+ * @author Alexander Preciado
  *
  * Permite acceder al identificador de un espacio basándose en su posición
  * dentro del array interno del juego.
@@ -53,5 +53,6 @@ Status game_add_space(Game *game, Space *space);
  * @return Id del espacio si la posición es válida, NO_ID en caso contrario.
  */
 Id game_get_space_id_at(Game *game, int position);
+
 
 #endif
