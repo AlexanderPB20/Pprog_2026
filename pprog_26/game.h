@@ -30,13 +30,20 @@ typedef struct _Game {
 
 /**
  * @brief It creates a new game, allocating memory and initializing its members
- * @author Profesores PPROG
+ * @author Samuel Manzorro
  *
  * @param game the identification number for the new game
  * @return a new game, initialized
  */
 Status game_create(Game *game);
-
+/**
+ * @brief It creates a new game fromm filename
+ * @author Samuel Manzorro
+ *
+ * @param game the identification number for the new game
+ * @param filename a pointer to charfilename with spaceloaded
+ * @return a new game, initialized
+ */
 Status game_create_from_file(Game *game, char *filename);
 
 /**
@@ -50,7 +57,7 @@ Status game_destroy(Game *game);
 
 /**
  * @brief It gets the space from
- * @author Profesores PPROG
+ * @author Samuel Manzorro
  *
  * @param game a pointer to the game that must be destroyed
  * @param space_id the id of the space
@@ -87,7 +94,7 @@ Id game_get_object_location(Game *game);
 
 /**
  * @brief It sets the location of the object
- * @author Profesores PPROG
+ * @author Samuel Manzorro
  *
  * @param game a pointer to the game
  * @param space_id the ID of the space for the object's new location
@@ -97,7 +104,7 @@ Status game_set_object_location(Game *game, Id space_id);
 
 /**
  * @brief It gets the last command executed in the game
- * @author Profesores PPROG
+ * @author Samuel Manzorro
  *
  * @param game a pointer to the game
  * @return a pointer to the last command structure
@@ -135,11 +142,12 @@ Status game_set_finished(Game *game, Bool finished);
 
 /**
  * @brief It prints the game information for debugging
- * @author Profesores PPROG
+ * @author Samuel Manzorro
  *
  * @param game a pointer to the game to be printed
  */
 void game_print(Game *game);
 
 #endif
+
 
