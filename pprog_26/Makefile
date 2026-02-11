@@ -5,17 +5,13 @@ LIBS = -lscreen
 LDFLAGS = -L.
 TARGET = castle
 
-# Lista de objetos necesarios para el ejecutable
 OBJ = game_loop.o game.o space.o command.o graphic_engine.o game_actions.o game_reader.o object.o player.o
 
-# Regla principal
 all: $(TARGET)
 
-# Enlazado final: utiliza la lista de objetos $(OBJ) en vez de *.c
 $(TARGET): $(OBJ)
 	$(CC) -o $(TARGET) $(CFLAGS) $(OBJ) $(LIBS) $(LDFLAGS)
 
-# Reglas de compilación de módulos
 game_loop.o: game_loop.c game.h command.h game_actions.h graphic_engine.h
 	$(CC) $(CFLAGS) -c game_loop.c
 
@@ -43,14 +39,13 @@ object.o: object.c object.h types.h
 player.o: player.c player.h types.h
 	$(CC) $(CFLAGS) -c player.c
 
-# Regla para ejecutar el juego
 run: all
 	./$(TARGET) castle.dat
 
-# Limpieza de archivos
 clean:
 	rm -f *.o $(TARGET)
 
 .PHONY: all clean run
+
 
 
