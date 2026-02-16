@@ -41,7 +41,7 @@ Player* player_create(Id id) {
     newplayer->id = id;
     newplayer->name[0] = '\0';
     newplayer->location = NO_ID;
-    newplayer->object=FALSE;
+    newplayer->object= NO_ID;
 
     return newplayer;
 }
@@ -142,4 +142,5 @@ Status player_print(Player* player) {
     fprintf(stdout,"--> Object (Id: %ld; Name: %s; Location: %ld; Object: %ld)\n", player->id, player->name, player->location, player->object);
 
     return OK;
+
 }
