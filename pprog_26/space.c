@@ -202,7 +202,8 @@ Status space_print(Space* space) {
   }
 
   /* 3. Print if there is an object in the space or not */
-  fprintf(stdout, "--> Space (Object: %ld)\n", (long)space->object); // (long) es duda
+  fprintf(stdout, "--> Space (Object: %ld)\n", (long)space->object);
 
   return OK;
 }
+
