@@ -27,7 +27,7 @@ struct _Space {
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
-  Set *object;              /*!< Id of the object in the space */
+  Set *object;              /*!< Set of the object in the space */
   Id character;             /*!< Id of the character in the space */
 };
 
@@ -246,4 +246,5 @@ if (space->object != NULL) {
 
   return OK;
 }
+
 
