@@ -9,6 +9,7 @@
  */
 
 #include "space.h"
+#include "set.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +27,8 @@ struct _Space {
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
-  Id object;              /*!< Id of the object in the space */
+  Set *object;              /*!< Id of the object in the space */
+  Id character;             /*!< Id of the character in the space */
 };
 
 /** space_create allocates memory for a new space
@@ -34,7 +36,6 @@ struct _Space {
  */
 Space* space_create(Id id) {
   Space* newSpace = NULL;
-
   /* Error control */
   if (id == NO_ID) return NULL;
 
@@ -50,16 +51,23 @@ Space* space_create(Id id) {
   newSpace->south = NO_ID;
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
-  newSpace->object = NO_ID;
 
+  newSpace->object = set_create();
+  if (newSpace->object == NULL) {
+    free(newSpace); 
+    return NULL;
+  }
   return newSpace;
 }
-
 Status space_destroy(Space* space) {
   if (!space) {
     return ERROR;
   }
 
+if (space->object) {
+    set_destroy(space->object);
+  }
+  
   free(space);
   return OK;
 }
@@ -150,20 +158,48 @@ Id space_get_west(Space* space) {
 }
 
 Status space_set_object(Space* space, Id object_id) {
+  if (!space || object_id == NO_ID) {
+    return ERROR;
+  }
+
+  return add_element_to_set(space->object, object_id);
+}
+
+Status space_set_character(Space* space, Id character) {
   if (!space) {
     return ERROR;
   }
-  space->object = object_id;
+  space->character = character;
   return OK;
 }
-
-Id space_get_object(Space* space) {
-  if (!space) {
+Id space_get_character(Space*space){
+  if(!space){
     return NO_ID;
   }
-  return space->object;
+  return space->character;
+}
+/* Para añadir un objeto a la sala */
+Status space_add_object(Space* space, Id object_id) {
+  if (!space || object_id == NO_ID) return ERROR;
+
+  /* Llamamos a tu función de set.c */
+  return add_element_to_set(space->object, object_id);
 }
 
+/* Para quitar un objeto específico de la sala */
+Status space_del_object(Space* space, Id object_id) {
+  if (!space || object_id == NO_ID) return ERROR;
+
+  /* Llamamos a tu función de set.c */
+  return del_element_to_set(space->object, object_id);
+}
+
+/* Para obtener el puntero al conjunto (útil para el motor gráfico) */
+Set* space_get_objects(Space* space) {
+  if (!space)
+   return NULL;
+  return space->object;
+}
 Status space_print(Space* space) {
   Id idaux = NO_ID;
 
@@ -201,8 +237,12 @@ Status space_print(Space* space) {
     fprintf(stdout, "---> No west link.\n");
   }
 
-  /* 3. Print if there is an object in the space or not */
-  fprintf(stdout, "--> Space (Object: %ld)\n", (long)space->object);
+  /* Dentro de space_print */
+if (space->object != NULL) {
+  fprintf(stdout, "---> Objects: ");
+  /* Si en set.c tienes una función set_print, úsala */
+  set_print(space->object); 
+}
 
   return OK;
 }
