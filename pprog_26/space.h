@@ -154,8 +154,32 @@ Status space_set_object(Space* space, Id object_id);
  * @param space a pointer to the space
  * @return the id of the object
  */
-Id space_get_object(Space* space);
 
+Status space_set_character(Space* space, Id character_id);
+
+Id space_get_character(Space* space);
+
+/* Cambia estas funciones en space.h */
+
+/**
+ * @brief Añade un objeto al conjunto de la sala
+ */
+Status space_add_object(Space* space, Id object_id);
+
+/**
+ * @brief Elimina un objeto específico del conjunto de la sala
+ */
+Status space_del_object(Space* space, Id object_id);
+
+/**
+ * @brief Comprueba si un objeto concreto está en la sala
+ */
+Bool space_has_object(Space* space, Id object_id);
+
+/**
+ * @brief Devuelve el puntero al conjunto (Set) completo
+ */
+Set* space_get_objects(Space* space);
 /**
  * @brief It prints the space information
  * @author Profesores PPROG
@@ -163,7 +187,7 @@ Id space_get_object(Space* space);
  * This fucntion shows the id and name of the space, the spaces that surrounds it and wheter it has an object or not.
  * @param space a pointer to the space
  * @return OK, if everything goes well or ERROR if there was some mistake
- */
 Status space_print(Space* space);
 
 #endif
+
