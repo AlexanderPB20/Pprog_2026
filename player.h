@@ -102,6 +102,36 @@ Status player_set_object(Player* player, Id object_id);
 Id player_get_object(Player* player);
 
 
+
+/**
+ * @brief It sets the health of the player
+ * @param player a pointer to the player
+ * @param health the new health value
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status player_set_health(Player* player, int health);
+
+/**
+ * @brief It gets the health of the player
+ * @param player a pointer to the player
+ * @return the health of the player, or -1 in case of error
+ */
+int player_get_health(Player* player);
+
+/**
+ * @brief It sets the graphic description of the player
+ * @param player a pointer to the player
+ * @param gdesc a string with the graphic description
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status player_set_gdesc(Player* player, char* gdesc);
+
+/**
+ * @brief It gets the graphic description of the player
+ * @param player a pointer to the player
+ * @return a string with the graphic description
+ */
+const char* player_get_gdesc(Player* player);
 /**
  * @brief It prints the player information
  * @author Alexander Preciado
@@ -112,5 +142,6 @@ Id player_get_object(Player* player);
  */
 Status player_print(Player* player);
 
-
 #endif
+
+
