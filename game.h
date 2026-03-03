@@ -199,7 +199,15 @@ Id game_get_object_location(Game *game, Object* object);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status game_set_object_location(Game *game, Object* object, Id space_id);
+/**
+ * @brief It adds the object in the game
+ * @author Olger ALexander Preciado
+ *
+ * @param game a pointer to the game
+ * @return a pointer to the last command structure
+ */
 
+Status game_add_object(Game *game, Object *object);
 /**
  * @brief It gets the last command executed in the game
  * @author Samuel Manzorro
@@ -207,6 +215,7 @@ Status game_set_object_location(Game *game, Object* object, Id space_id);
  * @param game a pointer to the game
  * @return a pointer to the last command structure
  */
+
 Command* game_get_last_command(Game *game);
 
 /**
@@ -247,5 +256,6 @@ Status game_set_finished(Game *game, Bool finished);
 void game_print(Game *game);
 
 #endif
+
 
 
