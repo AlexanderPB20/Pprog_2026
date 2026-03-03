@@ -44,6 +44,8 @@ Player* player_create(Id id) {
     newplayer->name[0] = '\0';
     newplayer->location = NO_ID;
     newplayer->object= NO_ID;
+    newplayer->health = 10;
+    newplayer->gdesc[0] = '\0';
 
     return newplayer;
 }
@@ -134,6 +136,28 @@ Id player_get_object(Player* player) {
     return player->object;
 }
 
+Status player_set_health(Player* player, int health) {
+    if (!player) return ERROR;
+    player->health = health;
+    return OK;
+}
+
+int player_get_health(Player* player) {
+    if (!player) return -1;
+    return player->health;
+}
+
+Status player_set_gdesc(Player* player, char* gdesc) {
+    if (!player || !gdesc) return ERROR;
+    if (!strcpy(player->gdesc, gdesc)) return ERROR;
+    return OK;
+}
+
+const char* player_get_gdesc(Player* player) {
+    if (!player) return NULL;
+    return player->gdesc;
+}
+
 Status player_print(Player* player) {
 
     if (!player)
@@ -141,8 +165,10 @@ Status player_print(Player* player) {
         return ERROR;
     }
 
-    fprintf(stdout,"--> Player (Id: %ld; Name: %s; Location: %ld; Object: %ld)\n", player->id, player->name, player->location, player->object);
+    fprintf(stdout,"--> Player (Id: %ld; Name: %s; Location: %ld; Object: %ld; Health: %d; Graphic Description: %s)\n", player->id, player->name, player->location, player->object, player->health, player->gdesc);
 
     return OK;
 
 }
+
+
