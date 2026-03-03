@@ -25,16 +25,25 @@
 Status game_reader_create_from_file(Game *game, char *filename);
 
 /**
- * @brief Carga los espacios de un juego desde un fichero
+ * @brief It loads the spaces of a game from a filename
  * @author Alexander Preciado
  *
- * Abre el fichero indicado y lee los datos de los espacios para crearlos
- * y añadirlos a la estructura del juego[cite: 21, 92].
- *
- * @param game Puntero a la estructura del juego donde se cargarán los espacios.
- * @param filename Nombre del fichero que contiene los datos de los espacios.
- * @return OK si se cargan los espacios correctamente, ERROR en caso contrario.
+ * @param game a pointer to the structure of the game where the spaces are loaded
+ * @param filename a pointer to char with the name of the file that contains the spaces data
+ * @return OK if the spaces are loaded correctly, ERROR otherwise.
  */
 Status game_reader_load_spaces(Game *game, char *filename);
+/**
+ * @brief It loads the objects of a game from a filename
+ * @author Alexander Preciado
+ *
+ * @param game a pointer to the structure of the game where the objects are loaded
+ * @param filename a pointer to char with the name of the file that contains the objects data
+ * @return OK if the objects are loaded correctly, ERROR otherwise.
+ */
+
+Status game_reader_load_objects(Game *game, char *filename);
 
 #endif
+
+
