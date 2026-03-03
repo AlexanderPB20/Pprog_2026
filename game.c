@@ -42,8 +42,12 @@ Game *game_create() {
   for (i = 0; i < MAX_PLAYERS; i++) {
     game->players[i] = NULL;
   }
-  
   game->n_players = 0;
+  Player *p = player_create(1); /* Creamos al jugador con ID 1 */
+  if (p != NULL) {
+    game->players[0] = p;
+    game->n_players = 1;
+  }
 
   for (i = 0; i < MAX_SPACES; i++) {
     game->spaces[i] = NULL;
@@ -279,6 +283,14 @@ Status game_set_object_location(Game *game, Object* object, Id space_id) {
 
   return space_add_object(game_get_space(game, space_id), object_get_id(object));
 }
+Status game_add_object(Game *game, Object *object){
+  if(!game || !object || game->n_objects >= MAX_OBJECTS){
+    return ERROR;
+  }
+  game->objects[game->n_objects] = object;
+  game->n_objects++;
+  return OK;
+}
 
 Command* game_get_last_command(Game *game) { return game->last_cmd; }
 
@@ -318,3 +330,5 @@ void game_print(Game *game) {
     character_print(game->characters[i]);
   }
 }
+
+
