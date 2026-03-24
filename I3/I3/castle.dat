@@ -1,19 +1,39 @@
-#s:11|Entry|-1|-1|12|-1|    !#   |[_]--'---|!"`"^^"!!|! /^\ !!!|_!_!I!_!|
-#s:12|Corridor|11|-1|13|121|  .===.  |  ! . . ! |  ! .'. ! | ()_____()| II_____II |
-#s:121|Dungeon|-1|-1|-1|-1|      _  |     ! ! |  ___! ! | (    .' |  )  (   |
-#s:13|Dining room|12|131|14|-1|  /\ /\ /\ | //\\//\\//\| //\\//\\//\|  II II II | --------- |
-#s:131|Room|-1|132|-1|13|!-------!|! .   . !|! .   . !|! .   . !|!-------!|
-#s:132|Bathroom|-1|-1|-1|131|
-#s:14|Kitchen|13|-1|15|-1|
-#s:15|Inner courtyard|14|-1|16|-1|
-#s:16|Garden|15|-1|-1|-1|
+#s:11|Entry|    !#   |[_]--'---|!"`"^^"!!|! /^\ !!!|_!_!I!_!| |
+#s:12|Corridor|  .===.  |  ! . . ! |  ! .'. ! | ()_____()| II_____II |
+#s:121|Dungeon|      _  |     ! ! |  ___! ! | (    .' |  )  (   |
+#s:13|Dining room|  /\ /\ /\ | //\\//\\//\| //\\//\\//\|  II II II | --------- |
+#s:131|Room|!-------!|! .   . !|! .   . !|! .   . !|!-------!|
+#s:132|Bathroom|||||
+#s:14|Kitchen|||||
+#s:15|Inner courtyard|||||
+#s:16|Garden|||||
 #o:21|Chest|14|
 #o:22|Tapestry|13|
 #o:23|Sword|11|
 #o:24|Parchment|16|
 #o:25|Armor|13|
 #o:26|Candelabra|12|
-#c:27|Phantom|(o)|12|0|Boo!|
-#c:28|Mage|^M*|13|1|Surprise!|
+#c:27|Phantom|(o)|12|5|0|Boo!|
+#c:28|Mage|^M*|13|5|1|Surprise!|
+
+#p:1|knight| ^C> |11|10|5|
+
+#l:1|L_Entry_Corridor|11|12|1|1
+#l:2|L_Corridor_Entry|12|11|0|1
+#l:3|L_Corridor_Dining room|12|13|1|1
+#l:4|L_Dining room_Corridor|13|12|0|1
+#l:5|Corridor_Dungeon|12|121|3|0
+#l:6|Dungeon_Corridor|121|12|2|0
+#l:7|L_Dining room_Room|13|131|2|1
+#l:8|L_Room_Dining room|131|13|3|1
+#l:9|L_Room_Bathroom|131|132|2|1
+#l:10|L_Bathroom_Habitacioón|132|131|3|1
+#l:11|L_Dining room_Kitchen|13|14|1|1
+#l:12|L_Kitchen_Dining room|14|13|0|1
+#l:13|L_Kitchen_Inner courtyard|14|15|1|1
+#l:14|L_Inner courtyard_Kitchen|15|14|0|1
+#l:15|L_Inner courtyard_Garden|15|16|1|1
+#l:16|L_Garden_Inner courtyard|16|15|0|1
+#l:17|Dungeon_Garden|121|16|1|1
 
 
