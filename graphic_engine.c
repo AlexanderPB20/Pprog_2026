@@ -440,7 +440,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   {
     if (player_get_object_from_backpack(game_get_player(game), l) != NO_ID)
     {
-      sprintf(str, "  %s ", object_get_name(game_get_object(game, inventory_get_object_id(player_get_backpack(game_get_player(game)), l))));
+      sprintf(str, "  -%s ", object_get_name(game_get_object(game, inventory_get_object_id(player_get_backpack(game_get_player(game)), l))));
       screen_area_puts(ge->descript, str);
     }
   }
