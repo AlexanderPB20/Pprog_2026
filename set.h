@@ -1,5 +1,5 @@
 /**
- * @brief It defines the game interface
+ * @brief It defines the set module interface
  *
  * @file set.h
  * @author Samuel Manzorro
@@ -54,7 +54,7 @@ Status set_add_element_to_set(Set *set, Id id);
 Status set_del_element_to_set(Set *set, Id id);
 
 /**
- * @brief It find whether the id exists in the set or not
+ * @brief It finds whether the id exists in the set or not
  * @author Samuel Manzorro
  * 
  * @param set a pointer to the set

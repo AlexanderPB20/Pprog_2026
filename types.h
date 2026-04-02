@@ -20,6 +20,6 @@ typedef enum { FALSE, TRUE } Bool;
 
 typedef enum { ERROR, OK } Status;
 
-typedef enum { N, S, E, W } Direction; // posible directions to move in the map
+typedef enum {NO_DIRECTION = -1, N, S, E, W} Direction; // posible directions to move in the map
 
 #endif

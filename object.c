@@ -1,8 +1,8 @@
 /**
- * @brief It implements the game structure
+ * @brief It implements the object module
  *
  * @file object.c
- * @author Profesores PPROG
+ * @author Samuel Manzorro
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -17,8 +17,8 @@
 
 
 struct _Object{
-    Id id;
-    char name[WORD_SIZE+1];
+    Id id; /*!< The id of the object */
+    char name[WORD_SIZE+1]; /*!< The name of the object */
 };
 
 Object* object_create(Id id) {

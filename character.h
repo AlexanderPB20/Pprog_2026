@@ -11,8 +11,6 @@
 #define CHARACTER_H
 #include "types.h"
 
-#define MAX_MESSAGE 60
-
 typedef struct _Character Character;
 
  /**
@@ -40,7 +38,7 @@ Status character_destroy(Character *character);
   * @param character a pointer to the character
   * @return the id of character
   */
-Id character_get_id(const Character *character);
+Id character_get_id(Character *character);
 
 /**
  * @brief It sets the id of a character
@@ -59,7 +57,7 @@ Status character_set_id(Character *character,Id id);
   * @param character a pointer to the character
   * @return  a string with the name of the character
   */
-const char *character_get_name(const Character *character);
+const char *character_get_name(Character *character);
 
 /**
   * @brief It sets the name of a character
@@ -78,11 +76,11 @@ Status character_set_name(Character *character, const char *name);
  * @param character a pointer to the character
  * @return a string with the graphical description of the character
  */
-const char *character_get_gdesc(const Character *character);
+const char *character_get_gdesc(Character *character);
 
 /**
  * @brief It sets the graphic description of a character
- * @author Fernando
+ * @author Olger Alexander Preciado Bolaños
  *
  * @param character a pointer to the character
  * @param gdesc a string with the graphic description of the character
@@ -97,7 +95,7 @@ Status character_set_gdesc(Character *character, const char *gdesc);
  * @param character a pointer to the character
  * @return the health value of the character
  */
-int character_get_health(const Character *character);
+int character_get_health(Character *character);
 
 /**
  * @brief It sets the health of a character
@@ -116,7 +114,7 @@ Status character_set_health(Character *character, int health);
  * @param character a pointer to the character
  * @return TRUE if the character is friendly, FALSE otherwise
  */
-Bool character_is_friendly(const Character *character);
+Bool character_is_friendly(Character *character);
 
 /**
  * @brief It sets a character to be friendly or not
@@ -135,7 +133,7 @@ Status character_set_friendly(Character *character, Bool friendly);
  * @param character a pointer to the character
  * @return a string with the message of the character
  */
-const char *character_get_message(const Character *character);
+const char *character_get_message(Character *character);
 
 /**
  * @brief It sets the message of a character
@@ -156,6 +154,6 @@ Status character_set_message(Character *character, const char *message);
   * @return OK, if everything goes well or ERROR if there was some mistake
   */
 
-Status character_print(const Character *character);
+Status character_print(Character *character);
 
 #endif
