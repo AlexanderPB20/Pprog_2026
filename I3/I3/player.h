@@ -2,9 +2,9 @@
  * @brief It defines the player module interface
  *
  * @file player.h
- * @author Alexander Preciado
- * @version 0
- * @date 27-01-2025
+ * @author Alexander Preciado, Paula de la Fuente, Samuel Manzorro
+ * @version 1
+ * @date 23-03-2025
  * @copyright GNU Public License
  */
 
@@ -53,6 +53,16 @@ Id player_get_id(Player* player);
 const char* player_get_name(Player* player);
 
 /**
+ * @brief It gets the inventory(backpack) of a player
+ * @author Paula de la Fuente
+ *
+ * @param player a pointer to the player
+ * @return  a pointer to the inventory of the player
+ */
+Inventory* player_get_backpack(Player* player);
+
+
+/**
  * @brief It sets the name of a player
  * @author Alexander Preciado
  *
@@ -82,91 +92,24 @@ Status player_set_location(Player* player, Id location);
 Id player_get_location(Player* player);
 
 /**
- * @brief It gets the player backpack
- * @author Samuel Manzorro
+ * @brief It adds an object to a player (in the backpack)
+ * @author Paula de la Fuente
  * 
  * @param player a pointer to the player
- * @return the player backpack
- */
-Inventory *player_get_backpack(Player *player);
-
-/**
- * @brief It sets the player backpack
- * @author Samuel Manzorro
- * 
- * @param player a pointer to the player
- * @param inv a pointer to the inventory to be set
+ * @param obj_id the id of the object to be added
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status player_set_backpack(Player *player, Inventory *inv);
+Status player_add_object_to_backpack(Player* player, Id obj_id);
 
 /**
- * @brief It gets an object from the backpack and its position
- * @author Samuel Manzorro
+ * @brief It deletes an object from a player (from the backpack)
+ * @author Paula de la Fuente
  * 
  * @param player a pointer to the player
- * @param position the position to be searched
- * @return the id of the object searched
- */
-Id player_get_object_from_backpack(Player *player, int position);
-
-/**
- * @brief It adds an object to the player backpack
- * @author Samuel Manzorro
- * 
- * @param player a pointer to the player
- * @param obj the id of the object to be added
+ * @param obj_id the id of the object to be deleted
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status player_add_object_to_backpack(Player *player, Id obj);
-
-/**
- * @brief It removes an object of the player backpack
- * @author Samuel Manzorro
- * 
- * @param player a pointer to the player
- * @param obj the id of the object to be removed
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status player_remove_object_of_backpack(Player *player, Id obj);
-
-/**
- * @brief It checks if the player has an object or not
- * @author Samuel Manzorro
- * 
- * @param player a pointer to the player
- * @param obj the id of the object to be checked
- * @return TRUE, if everything goes well or FALSE if there was some mistake
- */
-Bool player_has_object(Player *player, Id obj);
-
-/**
- * @brief It checks if the backpack is full or not
- * @author Samuel Manzorro
- * 
- * @param player a pointer to the player
- * @return TRUE, if the backpack is full or FALSE if it is not
- */
-Bool player_backpack_is_full(Player *player);
-
-/**
- * @brief It sets the id of the object the player has
- * @author Alexander Preciado
- *
- * @param player a pointer to the player
- * @param object_id the id of the object
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status player_set_object_id(Player* player, Id object_id);
-
-/**
- * @brief It gets the id of the object the player has
- * @author Alexander Preciado
- *
- * @param player a pointer to the player
- * @return the id of the object the player has
- */
-Id player_get_object_id(Player* player);
+Status player_remove_object_of_backpack(Player* player, Id obj_id);
 
 /**
  * @brief It sets the health of the player
@@ -207,6 +150,35 @@ Status player_set_gdesc(Player* player, char *gdesc);
 char *player_get_gdesc(Player* player);
 
 /**
+ * @brief It checks if the player has an object or not
+ * @author Samuel Manzorro
+ * 
+ * @param player a pointer to the player
+ * @param obj the id of the object to be checked
+ * @return TRUE, if everything goes well or FALSE if there was some mistake
+ */
+Bool player_has_object(Player *player, Id obj);
+
+/**
+ * @brief It sets the player backpack
+ * @author Samuel Manzorro
+ * 
+ * @param player a pointer to the player
+ * @param inv a pointer to the inventory to be set
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status player_set_backpack(Player *player, Inventory *inv);
+
+/**
+ * @brief It checks if the backpack is full or not
+ * @author Samuel Manzorro
+ * 
+ * @param player a pointer to the player
+ * @return TRUE, if the backpack is full or FALSE if it is not
+ */
+Bool player_backpack_is_full(Player *player);
+
+/**
  * @brief It sets the maximum number of objects the player backpack can contain
  * @author Samuel Manzorro
  * 
@@ -215,6 +187,17 @@ char *player_get_gdesc(Player* player);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status player_set_max_objs(Player *player, int max_objs);
+
+/**
+ * @brief It gets an object from the backpack and its position
+ * @author Samuel Manzorro
+ * 
+ * @param player a pointer to the player
+ * @param position the position to be searched
+ * @return the id of the object searched
+ */
+Id player_get_object_from_backpack(Player *player, int position);
+
 
 /**
  * @brief It prints the player information
