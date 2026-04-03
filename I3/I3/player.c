@@ -2,7 +2,7 @@
  * @brief It implements the player module
  *
  * @file object.c
- * @author Profesores PPROG
+ * @author Profesores PPROG, Alexander Preciado, Paula de la Fuente, Samuel Manzorro
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -17,13 +17,14 @@
 
 
 struct _Player{
-    Id id;                  /*!< The id of the player */
-    char name[WORD_SIZE+1]; /*!< The name of the player */
-    Id location;            /*!< The location of the player */
-    Inventory *backpack;    /*!< The inventor containing all of the player objects */
-    int health;             /*!< The health of the player */
-    char gdesc[7];          /*!< The description of the player */
+    Id id;                  /*!< id of the player */
+    char name[WORD_SIZE+1]; /*!< name of the player */
+    Id location;            /*!< location of the player */
+    Inventory* backpack;     /*!< Inventory of the player (backpack with all objects) */
+    int health;             /*!< health of the player */
+    char gdesc[7];          /*!< description of the player */
 };
+
 
 Player* player_create(Id id) {
 
@@ -43,7 +44,7 @@ Player* player_create(Id id) {
     newplayer->id = id;
     newplayer->name[0] = '\0';
     newplayer->location = NO_ID;
-    newplayer->backpack = inventory_create();
+    newplayer->backpack= inventory_create();
     newplayer->health = 10;
     newplayer->gdesc[0] = '\0'; 
 
@@ -57,7 +58,9 @@ Status player_destroy(Player* player) {
         return ERROR;
     }
 
-    inventory_destroy(player->backpack);
+    if(inventory_destroy(player->backpack)==ERROR) {
+        return ERROR;
+    }
 
     free(player);
     return OK;
@@ -119,9 +122,51 @@ Id player_get_location(Player* player) {
     return player->location;
 }
 
-Inventory *player_get_backpack(Player *player) {
-    if (!player)
+Status player_add_object_to_backpack(Player* player, Id obj_id) {
+    if(!player || obj_id==NO_ID) {
+        return ERROR;
+    }
+    /*Make sure that there's space in the backpack*/
+    if(inventory_get_num_objects(player->backpack)==MAX_OBJS) {
+        return ERROR;
+    }
+    /*Make sure that the object is not already in the backpack*/
+    if(inventory_has_object(player->backpack, obj_id)==TRUE){
+        return ERROR;
+    }
+
+    if(inventory_add_object(player->backpack, obj_id)==ERROR) {
+        return ERROR;
+    }
+
+    return OK;
+}
+
+Status player_remove_object_of_backpack(Player* player, Id obj_id) {
+   
+    if(!player || obj_id==NO_ID) {
+        return ERROR;
+    }
+    
+    /*Make sure that the object is already in the backpack*/
+    if(inventory_has_object(player->backpack, obj_id)==FALSE){
+        return ERROR;
+    }
+
+    return inventory_remove_object(player->backpack, obj_id);
+}
+
+Bool player_has_object(Player *player, Id obj) {
+    if (!player || obj == NO_ID)
     {
+        return FALSE;
+    }
+
+    return inventory_has_object(player->backpack, obj);
+}
+
+Inventory* player_get_backpack(Player* player) {
+    if(!player) {
         return NULL;
     }
 
@@ -136,55 +181,6 @@ Status player_set_backpack(Player *player, Inventory *inv) {
 
     player->backpack = inv;
     return OK;
-}
-
-Id player_get_object_from_backpack(Player *player, int position) {
-    if (!player || position < 0)
-    {
-        return NO_ID;
-    }
-
-    return inventory_get_object_id(player_get_backpack(player), position);
-}
-
-Status player_add_object_to_backpack(Player *player, Id obj) {
-    if (!player || obj == NO_ID)
-    {
-        return ERROR;
-    }
-
-    return inventory_add_object(player->backpack, obj);
-}
-
-Status player_remove_object_of_backpack(Player *player, Id obj) {
-    if (!player || obj == NO_ID)
-    {
-        return ERROR;
-    }
-
-    return inventory_remove_object(player->backpack, obj);
-}
-
-Bool player_has_object(Player *player, Id obj) {
-    if (!player || obj == NO_ID)
-    {
-        return FALSE;
-    }
-
-    return inventory_has_object(player->backpack, obj);
-}
-
-Bool player_backpack_is_full(Player *player) {
-    if (!player)
-    {
-        return FALSE;
-    }
-
-    if (inventory_get_n_objects(player->backpack) == MAX_OBJS)
-    {
-        return TRUE;
-    }
-    return FALSE;
 }
 
 Status player_set_health(Player *player, int health) {
@@ -225,6 +221,20 @@ char *player_get_gdesc(Player *player) {
     return player->gdesc;
 }
 
+
+Bool player_backpack_is_full(Player *player) {
+    if (!player)
+    {
+        return FALSE;
+    }
+
+    if (inventory_get_num_objects(player->backpack) == MAX_OBJS)
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 Status player_set_max_objs(Player *player, int max_objs) {
     if (!player || max_objs > MAX_OBJS)
     {
@@ -232,6 +242,15 @@ Status player_set_max_objs(Player *player, int max_objs) {
     }
 
     return inventory_set_max_objs(player->backpack, max_objs);
+}
+
+Id player_get_object_from_backpack(Player *player, int position) {
+    if (!player || position < 0)
+    {
+        return NO_ID;
+    }
+
+    return inventory_get_object_id(player_get_backpack(player), position);
 }
 
 Status player_print(Player* player) {
@@ -242,7 +261,9 @@ Status player_print(Player* player) {
     }
 
     fprintf(stdout,"--> Player (Id: %ld; Name: %s; Location: %ld; Health: %d; Description: %s)\n", player->id, player->name, player->location, player->health, player->gdesc);
-    inventory_print(player->backpack);
+    if(inventory_print(player->backpack)==ERROR){
+        return ERROR;
+    }
 
     return OK;
 }
