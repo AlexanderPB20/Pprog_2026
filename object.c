@@ -1,8 +1,8 @@
 /**
- * @brief It implements the game structure
+ * @brief It implements the object module
  *
  * @file object.c
- * @author Profesores PPROG
+ * @author Samuel Manzorro
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -17,8 +17,9 @@
 
 
 struct _Object{
-    Id id;
-    char name[WORD_SIZE+1];
+    Id id; /*!< The id of the object */
+    char name[WORD_SIZE+1]; /*!< The name of the object */
+    char description[WORD_SIZE+1]; /*!< The description of the object */
 };
 
 Object* object_create(Id id) {
@@ -38,6 +39,7 @@ Object* object_create(Id id) {
 
     newobject->id=id;
     newobject->name[0]='\0';
+    newobject->description[0]='\0';
 
     return newobject;
 }
@@ -98,4 +100,21 @@ Status object_print(Object* object) {
     fprintf(stdout,"--> Object (Id: %ld; Name: %s)\n", object->id, object->name);
 
     return OK;
+}
+
+Status object_set_description(Object* object, const char* desc) {
+    if (!object || !desc) {
+        return ERROR;
+    }
+    if (!strcpy(object->description, desc)) {
+        return ERROR;
+    }
+    return OK;
+}
+
+const char* object_get_description(Object* object) {
+    if (!object) {
+        return NULL;
+    }
+    return object->description;
 }
