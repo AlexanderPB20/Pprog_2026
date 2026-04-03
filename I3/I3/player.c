@@ -127,7 +127,7 @@ Status player_add_object_to_backpack(Player* player, Id obj_id) {
         return ERROR;
     }
     /*Make sure that there's space in the backpack*/
-    if(inventory_get_num_objects(player->backpack)==MAX_OBJS) {
+    if(inventory_get_n_objects(player->backpack)==MAX_OBJS) {
         return ERROR;
     }
     /*Make sure that the object is not already in the backpack*/
