@@ -16,7 +16,7 @@
 #include "set.h"
 #include "test.h"
 
-#define MAX_TESTS 30
+#define MAX_TESTS 41
 
 /** 
  * @brief Main function for SPACE unit tests. 
@@ -83,13 +83,10 @@ int main(int argc, char** argv) {
   if (all || test == 35) test2_space_get_character();
   if (all || test == 36) test1_space_set_gdesc();
   if (all || test == 37) test2_space_set_gdesc();
-
-  /*AÑADIR TRAS EL BOOL DISCOVERED*/
   if (all || test == 38) test1_space_set_discovered();
-  if (all || test == 38) test2_space_set_discovered();
-
-  if (all || test == 37) test1_space_is_discovered();
-  if (all || test == 37) test2_space_is_discovered();
+  if (all || test == 39) test2_space_set_discovered();
+  if (all || test == 40) test1_space_is_discovered();
+  if (all || test == 41) test2_space_is_discovered();
 
 
   PRINT_PASSED_PERCENTAGE;
