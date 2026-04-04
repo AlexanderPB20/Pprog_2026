@@ -2,7 +2,7 @@
  * @brief It defines the space module interface
  *
  * @file space.h
- * @author Samuel Manzorro
+ * @author Samuel Manzorro, Paula de la Fuente
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -231,6 +231,25 @@ Bool space_has_character(Space *space, Id character_id);
  * @return the set of objects in the space
  */
 Set *space_get_objects(Space *space);
+
+/**
+ * @brief It sets a space to be discovered or not
+ * @author Paula de la Fuente
+ *
+ * @param space a pointer to the space
+ * @param discovered whether the space is discovered or not
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status space_set_discovered(Space* space, Bool discovered);
+
+/**
+ * @brief It gets whether a space is discovered or not
+ * @author Paula de la Fuente
+ *
+ * @param space a pointer to the space
+ * @return TRUE if the space is discovered, FALSE if not
+ */
+Bool space_is_discovered(Space* space);
 
 /**
  * @brief It prints the space information
