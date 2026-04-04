@@ -2,6 +2,7 @@
  * * @file space_test.h
  * @author Profesores Pprog
  * @author Samuel Manzorro
+ * @author Paula de la Fuente
  * @version 0.0 
  * @date 17-02-2025
  * @copyright GNU Public License
@@ -268,5 +269,35 @@ void test1_space_set_gdesc();
  * @post Output == ERROR
  */
 void test2_space_set_gdesc();
+
+/*AÑADIR TRAS EL BOOL DISCOVERED*/
+
+/**
+ * @test Test function for space_discovered setting
+ * @pre Valid pointer to space
+ * @post Output == OK
+ */
+void test1_space_set_discovered();
+
+/**
+ * @test Test function for space_discovered setting
+ * @pre Pointer to space = NULL
+ * @post Output == ERROR
+ */
+void test2_space_set_discovered();
+
+/**
+ * @test Test function for checking if space is discovered
+ * @pre Valid pointer to space set as discovered
+ * @post Output == TRUE
+ */
+void test1_space_is_discovered();
+
+/**
+ * @test Test function for checking if space is discovered
+ * @pre Pointer to space = NULL
+ * @post Output == FALSE
+ */
+void test2_space_is_discovered();
 
 #endif
