@@ -287,11 +287,26 @@ Id game_get_player_location(Game *game) {
 }
 
 Status game_set_player_location(Game *game, Id space_id) {
+  Space* space;
   if (space_id == NO_ID) {
     return ERROR;
   }
 
-  return player_set_location(game->player, space_id);
+  if(player_set_location(game->player, space_id)==ERROR) {
+    return ERROR;
+  }
+
+  /*Set the space where the player is as discovered */
+  space = game_get_space(game, space_id);
+  if(!space){
+    return ERROR;
+  }
+
+  if(space_is_discovered(space)==FALSE) {
+    space_set_discovered(space, TRUE);
+  }
+
+  return OK;
 }
 
 Id game_get_object_location(Game *game, Id object_id) {
