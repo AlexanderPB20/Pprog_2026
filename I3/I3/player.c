@@ -228,7 +228,7 @@ Bool player_backpack_is_full(Player *player) {
         return FALSE;
     }
 
-    if (inventory_get_num_objects(player->backpack) == MAX_OBJS)
+    if (inventory_get_n_objects(player->backpack) == MAX_OBJS)
     {
         return TRUE;
     }
