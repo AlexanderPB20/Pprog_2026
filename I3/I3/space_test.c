@@ -2,7 +2,7 @@
  * @brief It tests space module
  * 
  * @file space_test.c
- * @author Profesores Pprog
+ * @author Profesores Pprog, Paula de la Fuente
  * @version 0.0 
  * @date 17-02-2025
  * @copyright GNU Public License
@@ -83,6 +83,14 @@ int main(int argc, char** argv) {
   if (all || test == 35) test2_space_get_character();
   if (all || test == 36) test1_space_set_gdesc();
   if (all || test == 37) test2_space_set_gdesc();
+
+  /*AÑADIR TRAS EL BOOL DISCOVERED*/
+  if (all || test == 38) test1_space_set_discovered();
+  if (all || test == 38) test2_space_set_discovered();
+
+  if (all || test == 37) test1_space_is_discovered();
+  if (all || test == 37) test2_space_is_discovered();
+
 
   PRINT_PASSED_PERCENTAGE;
 
@@ -317,3 +325,27 @@ void test2_space_get_id() {
   Space *s = NULL;
   PRINT_TEST_RESULT(space_get_id(s) == NO_ID);
 }
+
+void test1_space_set_discovered() {
+    Space *s = space_create(5);
+    PRINT_TEST_RESULT(space_set_discovered(s, TRUE) == OK);
+    space_destroy(s);
+}
+
+void test2_space_set_discovered() {
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_set_discovered(s, TRUE) == ERROR);
+}
+
+void test1_space_is_discovered() {
+  Space *s = space_create(5);
+  space_set_discovered(s, TRUE);
+  PRINT_TEST_RESULT(space_is_discovered(s) == TRUE);
+  space_destroy(s);
+}
+
+void test2_space_is_discovered() {
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_is_discovered(s) == FALSE);
+}
+
