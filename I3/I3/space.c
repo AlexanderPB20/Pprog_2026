@@ -2,7 +2,7 @@
  * @brief It implements the space module
  *
  * @file space.c
- * @author Samuel Manzorro
+ * @author Samuel Manzorro, Paula de la Fuente
  * @version 0
  * @date 24-01-2026
  * @copyright GNU Public License
@@ -24,7 +24,9 @@ struct _Space {
   Id west;                  /*!< Id of the space at the west */
   Set *objects;             /*!< Set of objects in the space */
   Id character;             /*!< Character in the space */
+  Bool discovered;          /*!< Whether the space is discovered or not*/
 };
+
 
 
 Space* space_create(Id id) {
@@ -61,6 +63,7 @@ Space* space_create(Id id) {
   }
 
   newSpace->character = NO_ID;
+  newSpace->discovered = FALSE;
 
   return newSpace;
 }
@@ -292,6 +295,24 @@ Set *space_get_objects(Space *space) {
   return space->objects;
 }
 
+Status space_set_discovered(Space* space, Bool discovered) {
+  if(!space){
+    return ERROR;
+  }
+
+  space->discovered = discovered;
+
+  return OK;
+}
+
+Bool space_is_discovered(Space* space) {
+  if(!space){
+    return FALSE;  /*si falla da false??*/
+  }
+
+  return space->discovered;
+}
+
 Status space_print(Space* space) {
   Id idaux = NO_ID;
 
@@ -350,6 +371,18 @@ Status space_print(Space* space) {
   } else {
     fprintf(stdout, "---> No object in the space.\n");
   }
+
+  idaux = space_is_discovered(space);
+  if (idaux == TRUE) {
+    fprintf(stdout, "---> Space is discovered.\n");
+  } else {
+    fprintf (stdout, "---> Space is not discovered.\n");
+  }
+
+  return OK;
+}
+
+
 
   return OK;
 }
