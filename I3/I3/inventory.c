@@ -126,7 +126,7 @@ Bool inventory_has_object(Inventory* inv, Id obj){
 
     if (!inv || obj < 0)
     {
-        return ERROR;
+        return FALSE;
     }
 
     return set_find(inv->objs, obj);
@@ -134,7 +134,7 @@ Bool inventory_has_object(Inventory* inv, Id obj){
 
 Status inventory_add_object(Inventory* inv, Id obj){
 
-    if (!inv || inv->max_objs > MAX_OBJS)
+    if (!inv || inventory_get_n_objects(inv) >= inv->max_objs)
     {
         return ERROR;
     }
