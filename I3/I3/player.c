@@ -225,7 +225,7 @@ char *player_get_gdesc(Player *player) {
 Bool player_backpack_is_full(Player *player) {
     if (!player)
     {
-        return FALSE;
+        return TRUE;
     }
 
     if (inventory_get_n_objects(player->backpack) == MAX_OBJS)
