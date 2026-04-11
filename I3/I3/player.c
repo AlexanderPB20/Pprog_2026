@@ -236,7 +236,7 @@ Bool player_backpack_is_full(Player *player) {
 }
 
 Status player_set_max_objs(Player *player, int max_objs) {
-    if (!player || max_objs > MAX_OBJS || max_objs<0)
+    if (!player || max_objs<0)
     {
         return ERROR;
     }
