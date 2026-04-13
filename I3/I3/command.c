@@ -2,9 +2,9 @@
  * @brief It implements the command interpreter
  *
  * @file command.c
- * @author Samuel Manzorro
+ * @author Samuel Manzorro and Marta López
  * @version 0
- * @date 24-01-2026
+ * @date 10-04-2026
  * @copyright GNU Public License
  */
 
@@ -16,7 +16,7 @@
 #include <strings.h>
 
 
-char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}, {"l", "Left"}, {"r", "Right"}, {"t", "Take"}, {"d", "Drop"}, {"a", "Attack"}, {"c", "Chat"}};
+char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"m", "Move"}, {"t", "Take"}, {"d", "Drop"}, {"a", "Attack"}, {"c", "Chat"}, {"i", "Inspect"}};
 
 struct _Command {
   CommandCode code; /*!< The name of the command */
@@ -164,5 +164,38 @@ Status command_get_user_input(Command* command) {
   }
   else {
     return command_set_code(command, EXIT);
+  }
+}
+
+/* We use this function for the log to be able to print the command in a file. */
+char *command_to_string(CommandCode cmd){
+  switch (cmd)
+  {
+    case TAKE:
+      return "take";
+
+    case DROP:
+      return "drop";
+
+    case EXIT:
+      return "exit";
+
+    case UNKNOWN:
+      return "unknown";
+
+    case ATTACK:
+      return "attack";
+
+    case MOVE:
+      return "move";
+
+    case CHAT:
+      return "chat";
+
+    case INSPECT:
+      return "inspect";
+  
+    default:
+      return "unknown";
   }
 }
