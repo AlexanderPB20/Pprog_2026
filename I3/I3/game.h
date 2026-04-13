@@ -24,18 +24,7 @@
 #define MAX_PLAYERS 100 /*!< The maximum number of players in the game */
 #define MAX_CHARACTERS 100 /*!< The maximum number of characters in the game */
 
-typedef struct _Game {
-  Object* objects[MAX_OBJECTS]; /*!< The array of objects that contains the game */
-  int n_objects; /*!< The number of objects the game has */
-  Player *player; /*!< The player playing the game */
-  Space *spaces[MAX_SPACES]; /*!< The array of spaces that contains all the spaces of the game */
-  int n_spaces; /*!< The number of valid spaces the game map has */
-  Character *characters[MAX_SPACES]; /*!< An array of characters that contains the game */
-  int n_characters; /*!< The number of characters the game has */
-  Command *last_cmd; /*!< The last command typed by the user */
-  Bool finished; /*!< True if the game is finished, false if not */
-  char msg[WORD_SIZE]; /*!< Message printed by the game*/
-} Game;
+typedef struct _Game Game;
 
 /**
  * @brief It creates a new game, allocating memory and initializing its members
@@ -44,7 +33,7 @@ typedef struct _Game {
  * @param game a pointer to the game
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status game_create(Game *game);
+Game *game_create();
 
 /**
  * @brief It destroys a game, freeing the allocated memory
@@ -248,7 +237,46 @@ Id game_get_object_location(Game *game, Id object_id);
  * @param object_id the ID of the object for the object's new location
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status game_set_object_location(Space* space, Id object_id) ;
+Status game_set_object_location(Space* space, Id object_id);
+
+/**
+ * @brief It gets the connection between spaces
+ * @author Marta López
+ *
+ * @param game a pointer to the game
+ * @param origin the id of the current space
+ * @param direction the direction of the space
+ * @return the ID of the connection
+ */
+Id game_get_connection(Game *game, Id origin, Direction direction);
+
+/**
+ * @brief It adds a new link to the game
+ * @author Samuel Manzorro
+ * 
+ * @param game a pointer to the game
+ * @param link a pointer to the link to be set
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ * */
+Status game_add_link(Game *game, Link *link);
+
+/**
+ * @brief It gets the number of links in the game
+ * @author Marta López
+ * 
+ * @param game a pointer to the game
+ * @return the number of links in the game
+ *  */
+int game_get_n_links(Game *game);
+
+/**
+ * @brief It checks if the connection is open
+ * @author Marta López
+ *
+ * @param game a pointer to the game
+ * @return TRUE if the connecton is open, FALSE otherwise
+ */
+Bool game_connection_is_open(Game *game, Id origin, Direction direction);
 
 /**
  * @brief It gets the last command executed in the game
@@ -316,5 +344,4 @@ Status game_set_message(Game *game, const char *msg);
 void game_print(Game *game);
 
 #endif
-
 
