@@ -62,7 +62,7 @@ Status inventory_destroy(Inventory* inv){
 Id inventory_get_object_id(Inventory *inventory, int i) {
     Id element = NO_ID;
     
-    if (!inventory){
+    if (!inventory || i<0){
         return NO_ID;
     }
 
