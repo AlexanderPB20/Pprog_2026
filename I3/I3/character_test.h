@@ -1,5 +1,6 @@
-/** * @brief It declares the tests for the character module
- * * @file character_test.h
+/**
+ * @brief It declares the tests for the character module
+ * @file character_test.h
  * @author Olger Alexander Preciado Bolaños
  * @version 0.0 
  * @date 10-03-2025
