@@ -9,6 +9,7 @@ TEST_SPACE = space_test
 TEST_SET = set_test
 TEST_CHAR = character_test
 TEST_PLAYER = player_test
+TEST_INVENTORY = inventory_test
 TEST_LINK = link_test
 
 # Added character.o and set.o to the OBJ list
@@ -73,6 +74,10 @@ $(TEST_LINK): link_test.o link.o
 $(TEST_PLAYER): player_test.o player.o inventory.o set.o
 	$(CC) -o $(TEST_PLAYER) $(CFLAGS) player_test.o player.o inventory.o set.o
 
+$(TEST_INVENTORY): inventory_test.o inventory.o set.o
+	$(CC) -o $(TEST_INVENTORY) $(CFLAGS) inventory_test.o inventory.o set.o
+
+
 space_test.o: space_test.c space_test.h space.h test.h
 	$(CC) $(CFLAGS) -c space_test.c
 
@@ -88,6 +93,9 @@ link_test.o: link_test.c link_test.h link.c link.h
 player_test.o: player_test.c player_test.h player.h inventory.h set.h test.h
 	$(CC) $(CFLAGS) -c player_test.c
 
+inventory_test.o: inventory_test.c inventory_test.h inventory.h set.h test.h
+	$(CC) $(CFLAGS) -c inventory_test.c
+
 run: all
 	./$(TARGET) castle.dat
 
@@ -100,11 +108,14 @@ run_tests: $(TEST_SPACE) $(TEST_SET) $(TEST_CHAR) $(TEST_LINK) $(TEST_PLAYER)
 	./$(TEST_CHAR)
 	./$(TEST_LINK)
 	./$(TEST_PLAYER)
+	./$(TEST_INVENTORY)
+
 
 valgrind: all
 	echo "e" | valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(TARGET) castle.dat
 
 clean:
-	rm -f *.o $(TARGET) $(TEST_SPACE) $(TEST_SET) $(TEST_CHAR) $(TEST_LINK) $(TEST_PLAYER)
+	rm -f *.o $(TARGET) $(TEST_SPACE) $(TEST_SET) $(TEST_CHAR) $(TEST_PLAYER) $(TEST_INVENTORY) $(TEST_LINK)
 
 .PHONY: all clean run run_tests valgrind
+
