@@ -11,6 +11,7 @@ TEST_CHAR = character_test
 TEST_PLAYER = player_test
 TEST_INVENTORY = inventory_test
 TEST_LINK = link_test
+TEST_OBJECT = object_test
 
 # Added character.o and set.o to the OBJ list
 OBJ = game_loop.o game.o space.o command.o graphic_engine.o game_actions.o game_reader.o object.o player.o character.o set.o link.o inventory.o
@@ -77,6 +78,8 @@ $(TEST_PLAYER): player_test.o player.o inventory.o set.o
 $(TEST_INVENTORY): inventory_test.o inventory.o set.o
 	$(CC) -o $(TEST_INVENTORY) $(CFLAGS) inventory_test.o inventory.o set.o
 
+$(TEST_OBJECT): object_test.o object.o
+	$(CC) -o $(TEST_OBJECT) $(CFLAGS) object_test.o object.o
 
 space_test.o: space_test.c space_test.h space.h test.h
 	$(CC) $(CFLAGS) -c space_test.c
@@ -96,26 +99,28 @@ player_test.o: player_test.c player_test.h player.h inventory.h set.h test.h
 inventory_test.o: inventory_test.c inventory_test.h inventory.h set.h test.h
 	$(CC) $(CFLAGS) -c inventory_test.c
 
+object_test.o: object_test.c object_test.h object.h test.h
+	$(CC) $(CFLAGS) -c object_test.c
 run: all
 	./$(TARGET) castle.dat
 
 runlog: all
 	./$(TARGET) castle.dat -l logFile
 
-run_tests: $(TEST_SPACE) $(TEST_SET) $(TEST_CHAR) $(TEST_LINK) $(TEST_PLAYER)
+run_tests: $(TEST_SPACE) $(TEST_SET) $(TEST_CHAR) $(TEST_LINK) $(TEST_PLAYER) $(TEST_OBJECT) $(TEST_INVENTORY)
 	./$(TEST_SPACE)
 	./$(TEST_SET)
 	./$(TEST_CHAR)
 	./$(TEST_LINK)
 	./$(TEST_PLAYER)
 	./$(TEST_INVENTORY)
+	./$(TEST_OBJECT)
 
 
 valgrind: all
 	echo "e" | valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(TARGET) castle.dat
 
 clean:
-	rm -f *.o $(TARGET) $(TEST_SPACE) $(TEST_SET) $(TEST_CHAR) $(TEST_PLAYER) $(TEST_INVENTORY) $(TEST_LINK)
+	rm -f *.o $(TARGET) $(TEST_SPACE) $(TEST_SET) $(TEST_CHAR) $(TEST_PLAYER) $(TEST_INVENTORY) $(TEST_LINK) $(TEST_OBJECT)
 
 .PHONY: all clean run run_tests valgrind
-
