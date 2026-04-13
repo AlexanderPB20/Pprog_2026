@@ -22,13 +22,7 @@ void game_actions_unknown(Game *game);
 
 void game_actions_exit(Game *game);
 
-void game_actions_next(Game *game);
-
-void game_actions_back(Game *game);
-
-void game_actions_left(Game *game);
-
-void game_actions_right(Game *game);
+void game_actions_move(Game *game);
 
 void game_actions_take(Game *game);
 
@@ -37,6 +31,10 @@ void game_actions_drop(Game* game);
 void game_actions_attack(Game *game);
 
 void game_actions_chat(Game *game);
+
+void game_actions_inspect(Game *game);
+
+void game_actions_inspect(Game *game);
 
 /**
    Game actions implementation
@@ -58,20 +56,8 @@ Status game_actions_update(Game *game, Command *command) {
       game_actions_exit(game);
       break;
 
-    case NEXT:
-      game_actions_next(game);
-      break;
-
-    case BACK:
-      game_actions_back(game);
-      break;
-
-    case LEFT:
-      game_actions_left(game);
-      break;
-
-    case RIGHT:
-      game_actions_right(game);
+    case MOVE:
+      game_actions_move(game);
       break;
 
     case TAKE:
@@ -90,6 +76,10 @@ Status game_actions_update(Game *game, Command *command) {
       game_actions_chat(game);
       break;
 
+    case INSPECT:
+      game_actions_inspect(game);
+      break;
+
     default:
       break;
   }
@@ -105,88 +95,65 @@ void game_actions_unknown(Game *game) {}
 
 void game_actions_exit(Game *game) {}
 
-void game_actions_next(Game *game) {
-  Id current_id = NO_ID;
+void game_actions_move(Game *game) {
+  Id destination_id = NO_ID;
   Id space_id = NO_ID;
+  char *space_input = NULL;
 
   space_id = game_get_player_location(game);
-  if (space_id == NO_ID) {
-    command_set_status(game_get_last_command(game), ERROR);
-    return;
-  }
-
-  current_id = space_get_south(game_get_space(game, space_id));
-  if (current_id != NO_ID) {
-    game_set_player_location(game, current_id);
-    command_set_status(game_get_last_command(game), OK);
-    return;
-  }
-  return;
-}
-
-void game_actions_back(Game *game) {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = game_get_player_location(game);
-
-  if (NO_ID == space_id) {
-    command_set_status(game_get_last_command(game), ERROR);
-    return;
-  }
-
-  current_id = space_get_north(game_get_space(game, space_id));
-  if (current_id != NO_ID) {
-    game_set_player_location(game, current_id);
-    command_set_status(game_get_last_command(game), OK);
-    return;
-  }
-  command_set_status(game_get_last_command(game), ERROR);
-  return;
-}
-
-void game_actions_left(Game *game) {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = game_get_player_location(game);
-
-  if (NO_ID == space_id)
+  if (space_id == NO_ID)
   {
     command_set_status(game_get_last_command(game), ERROR);
     return;
   }
 
-  current_id = space_get_west(game_get_space(game, space_id));
-  if (current_id != NO_ID)
-  {
-    game_set_player_location(game, current_id);
-    command_set_status(game_get_last_command(game), OK);
-    return;
-  }
-
-  command_set_status(game_get_last_command(game), ERROR);
-  return;
-}
-
-void game_actions_right(Game *game) {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = game_get_player_location(game);
-
-  if (NO_ID == space_id)
+  space_input = command_get_arg(game_get_last_command(game), 0);
+  if (!space_input)
   {
     command_set_status(game_get_last_command(game), ERROR);
     return;
   }
 
-  current_id = space_get_east(game_get_space(game, space_id));
-  if (current_id != NO_ID)
+  if (strcmp(space_input, "north") == 0 || strcmp(space_input, "n") == 0)
   {
-    game_set_player_location(game, current_id);
-    command_set_status(game_get_last_command(game), OK);
-    return;
+    destination_id = game_get_connection(game, space_id, N);
+    if (destination_id != NO_ID && game_connection_is_open(game, space_id, N))
+    {
+      game_set_player_location(game, destination_id);
+      space_set_discovered(game_get_space(game, space_id), TRUE);
+      command_set_status(game_get_last_command(game), OK);
+      return;
+    }
+  } else if (strcmp(space_input, "south") == 0 || strcmp(space_input, "s") == 0)
+  {
+    destination_id = game_get_connection(game, space_id, S);
+    if (destination_id != NO_ID && game_connection_is_open(game, space_id, S))
+    {
+      game_set_player_location(game, destination_id);
+      space_set_discovered(game_get_space(game, space_id), TRUE);
+      command_set_status(game_get_last_command(game), OK);
+      return;
+    }
+  } else if (strcmp(space_input, "east") == 0 || strcmp(space_input, "e") == 0)
+  {
+    destination_id = game_get_connection(game, space_id, E);
+    if (destination_id != NO_ID && game_connection_is_open(game, space_id, E))
+    {
+      game_set_player_location(game, destination_id);
+      space_set_discovered(game_get_space(game, space_id), TRUE);
+      command_set_status(game_get_last_command(game), OK);
+      return;
+    }
+  } else if (strcmp(space_input, "west") == 0 || strcmp(space_input, "w") == 0)
+  {
+    destination_id = game_get_connection(game, space_id, W);
+    if (destination_id != NO_ID && game_connection_is_open(game, space_id, W))
+    {
+      game_set_player_location(game, destination_id);
+      space_set_discovered(game_get_space(game, space_id), TRUE);
+      command_set_status(game_get_last_command(game), OK);
+      return;
+    }
   }
 
   command_set_status(game_get_last_command(game), ERROR);
@@ -243,14 +210,14 @@ void game_actions_take(Game *game) {
     {
       continue;
     }
-    
-    if ((game_get_object_location(game, object_id) == space_id) && !player_has_object(player, object_id) && !player_backpack_is_full(player)) // si el objeto esta en el espacio y el jugador no tiene objeto
+
+    if ((game_get_object_location(game, object_id) == space_id) && !player_has_object(player, object_id)) /* The object is in the space and the player doesn't have an object. */
     {
-      if (strcmp(object_input, object_get_name(obj)) == 0) // compara si el argumento y el nombre del objeto son iguales
+      if (strcmp(object_input, object_get_name(obj)) == 0) /* Compares if the argument and name are equals. */
       {
-        player_add_object_to_backpack(player, object_get_id(obj)); // jugador toma objeto
-        space_del_object(game_get_space(game, space_id), object_get_id(obj)); // quita objeto del espacio
-        game_set_object_location(game_get_space(game, space_id), NO_ID); // actualiza la localizacion del objeto a NO_ID
+        player_add_object_to_backpack(player, object_id); /* Player takes the object. */
+        space_del_object(game_get_space(game, space_id), object_get_id(obj)); /* Remove the object from the space. */
+        game_set_object_location(game_get_space(game, space_id), NO_ID); /* Modifies the location of the object to NO_ID. */
         command_set_status(game_get_last_command(game), OK);
         return;        
       }
@@ -265,6 +232,7 @@ void game_actions_drop(Game* game) {
   Id space_id = NO_ID;
   Id object_id = NO_ID;
   Player *player = NULL;
+  char *object_input = NULL;
 
   if (!game)
   {
@@ -286,20 +254,26 @@ void game_actions_drop(Game* game) {
     return;
   }
   
-  for (int i = 0; i < inventory_get_max_objs(player_get_backpack(player)); i++)
+  object_input = command_get_arg(game_get_last_command(game), 0);
+  if (!object_input)
+  {
+    command_set_status(game_get_last_command(game), ERROR);
+    return;
+  }  
+
+  for (i = 0; i < player_get_n_objects(player); i++)
   {
     object_id = player_get_object_from_backpack(player, i);
     if (object_id == NO_ID)
     {
-      command_set_status(game_get_last_command(game), ERROR);
-      return;
+      continue;
     }
 
-    if (!space_has_object(game_get_space(game, space_id), object_id)) // player tiene objeto
+    if (player_has_object(player, object_id) && strcmp(object_input, object_get_name(game_get_object(game, object_id))) == 0) /* The player has the object. */
     {
-      space_add_object(game_get_space(game, space_id), object_id); // añade el objeto a la sala
-      player_remove_object_of_backpack(player, object_id); // jugador deja el objeto
-      game_set_object_location(game_get_space(game, space_id), object_id); // actualiza  localizacion del objeto en el juego
+      space_add_object(game_get_space(game, space_id), object_id); /* Adds the object to the space. */
+      player_remove_object_from_backpack(player, object_id); /* The player leaves the object. */
+      game_set_object_location(game_get_space(game, space_id), object_id); /* Modifies the location of the object. */
       command_set_status(game_get_last_command(game), OK);
       return;
     }
@@ -365,7 +339,7 @@ void game_actions_attack(Game *game) {
       character_set_health(character, character_get_health(character)-1);
       if (character_get_health(character) <= 0)
       {
-        // ya existe una verificacion de la vida en graphic_engine.c
+        /* The verification of life already exists in graphic_engine.c. */
       }
     }
     command_set_status(game_get_last_command(game), OK);
@@ -415,6 +389,60 @@ void game_actions_chat(Game *game) {
     return;
   }
   game_set_message(game, NULL);
+  command_set_status(game_get_last_command(game), ERROR);
+  return;
+}
+
+void game_actions_inspect(Game *game) {
+  
+  Id player_location = NO_ID;
+  char *object_input = NULL;
+  Object *obj = NULL;
+
+  if (!game)
+  {
+    command_set_status(game_get_last_command(game), ERROR);
+    return;
+  }
+
+  player_location = game_get_player_location(game);
+  if (player_location == NO_ID)
+  {
+    command_set_status(game_get_last_command(game), ERROR);
+    return;
+  }
+
+  object_input = command_get_arg(game_get_last_command(game), 0);
+  if (!object_input)
+  {
+    command_set_status(game_get_last_command(game), ERROR);
+    return;
+  }
+
+  for (int i = 0; i < set_get_n_elements(space_get_objects(game_get_space(game, player_location))); i++)
+  {
+    obj = game_get_object(game, set_get_element(space_get_objects(game_get_space(game, player_location)), i));
+
+    if (strcmp(object_input, object_get_name(obj)) == 0)
+    {
+      game_set_message(game, object_get_desc(obj));
+      command_set_status(game_get_last_command(game), OK);
+      return;
+    }
+  }
+
+  for (int j = 0; j < inventory_get_n_objects(player_get_backpack(game_get_player(game))); j++)
+  {
+    obj = game_get_object(game, inventory_get_object_id(player_get_backpack(game_get_player(game)), j));
+
+    if (strcmp(object_input, object_get_name(obj)) == 0)
+    {
+      game_set_message(game, object_get_desc(obj));
+      command_set_status(game_get_last_command(game), OK);
+      return;
+    }
+  }
+
   command_set_status(game_get_last_command(game), ERROR);
   return;
 }
