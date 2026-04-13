@@ -109,7 +109,7 @@ void test1_character_set_health() {
 }
 void test2_character_set_health() {
   Character *c = character_create(5);
-  PRINT_TEST_RESULT(character_set_health(c, -5) == ERROR); /* Vida negativa */
+  PRINT_TEST_RESULT(character_set_health(c, -5) == ERROR); /* Life in negative */
   character_destroy(c);
 }
 
