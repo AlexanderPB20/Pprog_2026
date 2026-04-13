@@ -2,9 +2,9 @@
  * @brief It defines the command interpreter interface
  *
  * @file command.h
- * @author Samuel Manzorro
+ * @author Samuel Manzorro and Marta López
  * @version 0
- * @date 27-01-2025
+ * @date 10-04-2026
  * @copyright GNU Public License
  */
 
@@ -20,7 +20,7 @@
 
 typedef enum { CMDS, CMDL } CommandType; /*!< The command type */
 
-typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, LEFT, RIGHT, TAKE, DROP, ATTACK, CHAT} CommandCode; /*!< The command code*/
+typedef enum { NO_CMD = -1, UNKNOWN, EXIT, MOVE, TAKE, DROP, ATTACK, CHAT, INSPECT} CommandCode; /*!< The command code*/
 
 typedef struct _Command Command;
 
@@ -108,5 +108,14 @@ Status command_get_status(Command* command);
  * @return OK if the input was processed, or ERROR if the command is NULL
  */
 Status command_get_user_input(Command* command);
+
+/**
+ * @brief It changes the command to string, we use it in game_loop_log.
+ * @author Marta López
+ *
+ * @param code the new CommandCode to be set
+ * @return a string
+ */
+char *command_to_string(CommandCode cmd);
 
 #endif
